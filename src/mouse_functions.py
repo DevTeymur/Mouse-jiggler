@@ -4,6 +4,7 @@ from time import sleep, time
 
 
 SLEEP_TIME = 0.1
+in_start_pos = True
 
 
 def is_cursor_moving():
@@ -18,9 +19,14 @@ def get_cursor_position():
     return position_corrs[0], position_corrs[1]
 
 
-def set_cursor_to_position(x, y, current_second):
-    # print('Current second:', current_second)
-    moveTo(x-2, y-2, duration=0.01) if current_second % 2 == 0 else moveTo(x+2, y+2, duration=0)
+def set_cursor_to_position(x, y):
+    global in_start_pos
+    if in_start_pos:
+        moveTo(x-2, y-2, duration=0.01)
+        in_start_pos = False
+    else:
+        moveTo(x+2, y+2, duration=0.01)
+        in_start_pos = True
 
 
 def get_current_second():
